@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 from dateutil import parser
@@ -76,7 +77,7 @@ def get_earnings_dates_using_selenium(
             data.append(li_row)
         return data
 
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 5)
     li_data = []
     while True:
         # Stop if limit has been reached
@@ -97,20 +98,23 @@ def get_earnings_dates_using_selenium(
         # Extract data
         li_data += extract_page(driver)
 
-        # Find the "next page" button
-        next_button = wait.until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'button[data-testid="next-page-button"]')
+        try:
+            # Find the "next page" button
+            next_button = wait.until(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, 'button[data-testid="next-page-button"]')
+                )
             )
-        )
 
-        # Stop if disabled attribute exists (end of pagination)
-        if next_button.get_attribute("disabled") is not None:
-            # print("No more pages.")
+            # Stop if disabled attribute exists (end of pagination)
+            if next_button.get_attribute("disabled") is not None:
+                # print("No more pages.")
+                break
+
+            # Click next
+            next_button.click()
+        except TimeoutException:
             break
-
-        # Click next
-        next_button.click()
 
         # Wait until first row’s text is different
         wait.until(
