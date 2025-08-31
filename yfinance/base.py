@@ -45,6 +45,7 @@ from .scrapers.funds import FundsData
 from .const import _BASE_URL_, _ROOT_URL_, _QUERY1_URL_, _SENTINEL_
 
 from .get_earnings_dates_using_selenium import get_earnings_dates_using_selenium
+from .get_earnings_dates_using_curl_cffi import get_earnings_dates_using_curl_cffi
 
 
 _tz_info_fetch_ctr = 0
@@ -710,6 +711,11 @@ class TickerBase:
     @utils.log_indent_decorator
     def get_earnings_dates_using_selenium(self, limit=12, headless = True) -> Optional[pd.DataFrame]:
         df = get_earnings_dates_using_selenium(limit = limit, ticker = self.ticker, headless=headless)
+        return df
+
+    @utils.log_indent_decorator
+    def get_earnings_dates_using_curl_cffi(self, limit=12) -> Optional[pd.DataFrame]:
+        df = get_earnings_dates_using_curl_cffi(limit = limit, ticker = self.ticker)
         return df
 
     @utils.log_indent_decorator
