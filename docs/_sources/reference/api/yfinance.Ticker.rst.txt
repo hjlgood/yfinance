@@ -150,6 +150,8 @@ Ticker
       :noindex:
    .. automethod:: get_earnings_dates
       :noindex:
+   .. automethod:: get_earnings_dates_using_selenium
+      :noindex:
    .. automethod:: get_earnings_estimate
       :noindex:
    .. automethod:: get_earnings_history
