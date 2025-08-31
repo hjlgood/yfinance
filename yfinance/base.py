@@ -708,8 +708,8 @@ class TickerBase:
         return self._news
 
     @utils.log_indent_decorator
-    def get_earnings_dates_using_selenium(self, driver_path, limit=12, headless = True) -> Optional[pd.DataFrame]:
-        df = get_earnings_dates_using_selenium(driver_path=driver_path, limit = limit, ticker = self.ticker, headless=headless)
+    def get_earnings_dates_using_selenium(self, limit=12, headless = True) -> Optional[pd.DataFrame]:
+        df = get_earnings_dates_using_selenium(limit = limit, ticker = self.ticker, headless=headless)
         return df
 
     @utils.log_indent_decorator

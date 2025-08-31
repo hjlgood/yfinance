@@ -1,27 +1,25 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 from dateutil import parser
 from zoneinfo import ZoneInfo
-import os
 from typing import Optional
 
 
 def get_earnings_dates_using_selenium(
-    driver_path: str, limit: int = 100, ticker: str = "AAPL", headless: bool = True
+    limit: int = 100, ticker: str = "AAPL", headless: bool = True
 ) -> Optional[pd.DataFrame]:
     """
     Uses Chrome WebDriver to scrap earnings data from YahooFinance.
     Currently doesn't support other browsers : Edge, Safari, firefox etc.
-    https://finance.yahoo.com/calendar/earnings
+    (https://finance.yahoo.com/calendar/earnings)
 
     Args:
-        driver_path (str): Absolute path to the chromedriver executable
-                           Raises an error if the path is invalid
         limit (int): Number of rows to extract
         ticker (str): Ticker to search for
         headless (bool): Use selenium in headless mode (Don't open the browser)
@@ -42,9 +40,6 @@ def get_earnings_dates_using_selenium(
         2014-02-13         0.55         0.58        6.36
         2013-10-31         0.51         0.54        6.86
         2013-08-01         0.46          0.5        7.86
-
-    Raises:
-        ValueError: If driver_path is not a valid file path.
     """
     # -------------------------
     # Configure headless Chrome
@@ -60,16 +55,11 @@ def get_earnings_dates_using_selenium(
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--window-size=1920,1080")
-        chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36")
-
-    # Check if the path is a valid file
-    if not os.path.isfile(driver_path):
-        raise ValueError(
-            f"Chromedriver path is not valid: '{driver_path}'. "
-            "Please ensure the path is correct and the file exists."
+        chrome_options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
         )
-    else:
-        service = Service(driver_path)
+
+    service = ChromeService(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # Open the Yahoo earnings calendar page
@@ -160,6 +150,5 @@ def get_earnings_dates_using_selenium(
 
 
 if __name__ == "__main__":
-    chromedriver = "YOUR_CHROMEDRIVER_PATH"
-    df = get_earnings_dates_using_selenium(chromedriver, limit=9999, ticker="IQV")
+    df = get_earnings_dates_using_selenium(limit=9999, ticker="IQV")
     print(df)
