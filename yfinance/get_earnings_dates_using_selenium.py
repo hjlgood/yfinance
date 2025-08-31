@@ -46,7 +46,7 @@ def get_earnings_dates_using_selenium(
     # -------------------------
     chrome_options = Options()
     # Don't wait for full page load (ADs take forever to load)
-    chrome_options.page_load_strategy = "eager"
+    chrome_options.page_load_strategy = "none"
     if headless:
         # New headless mode for Chrome 109+
         chrome_options.add_argument("--headless=new")
