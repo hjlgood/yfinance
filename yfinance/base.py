@@ -708,10 +708,11 @@ class TickerBase:
         self._news = [article for article in news if not article.get('ad', [])]
         return self._news
 
-    @utils.log_indent_decorator
-    def get_earnings_dates_using_selenium(self, limit=12, headless = True) -> Optional[pd.DataFrame]:
-        df = get_earnings_dates_using_selenium(limit = limit, ticker = self.ticker, headless=headless)
-        return df
+    # Don't Use Selenium. Use curl_cffi instead
+    # @utils.log_indent_decorator
+    # def get_earnings_dates_using_selenium(self, limit=12, headless = True) -> Optional[pd.DataFrame]:
+    #     df = get_earnings_dates_using_selenium(limit = limit, ticker = self.ticker, headless=headless)
+    #     return df
 
     @utils.log_indent_decorator
     def get_earnings_dates_using_curl_cffi(self, limit=12) -> Optional[pd.DataFrame]:
