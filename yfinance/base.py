@@ -44,7 +44,7 @@ from .scrapers.funds import FundsData
 
 from .const import _BASE_URL_, _ROOT_URL_, _QUERY1_URL_, _SENTINEL_
 
-from .get_earnings_dates_using_selenium import get_earnings_dates_using_selenium
+# from .get_earnings_dates_using_selenium import get_earnings_dates_using_selenium
 from .get_earnings_dates_using_curl_cffi import get_earnings_dates_using_curl_cffi
 
 
