@@ -1,5 +1,4 @@
 from io import StringIO
-from curl_cffi import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from typing import Optional
@@ -8,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 
 def get_earnings_dates_using_curl_cffi(
-    limit: int = 100, offset: int = 0, ticker: str = "AAPL"
+    _data, limit: int = 100, offset: int = 0, ticker: str = "AAPL"
 ) -> Optional[pd.DataFrame]:
     """
     Uses curl_cffi to scrap earnings data from YahooFinance.
@@ -39,11 +38,11 @@ def get_earnings_dates_using_curl_cffi(
     # Define Constants
     #####################################################
     unique_class_id_for_table = "yf-7uw1qi bd"
-    if limit > 0 and limit < 25:
+    if limit > 0 and limit <= 25:
         size = 25
-    elif limit >= 25 and limit < 50:
+    elif limit > 25 and limit <= 50:
         size = 50
-    elif limit >= 50 and limit <= 100:
+    elif limit > 50 and limit <= 100:
         size = 100
     else:
         raise ValueError("Please use limit <= 100")
@@ -56,9 +55,8 @@ def get_earnings_dates_using_curl_cffi(
     # End of Constants
     #####################################################
 
-    # Use curl_cffi to make a request
-    # 'impersonate' ensures the request mimics a real browser
-    response = requests.get(url, impersonate="chrome101")
+    # Use YfData.cache_get
+    response = _data.cache_get(url)
     # Check if the request was successful
     response.raise_for_status()
     # Parse the HTML content using BeautifulSoup
@@ -100,8 +98,3 @@ def get_earnings_dates_using_curl_cffi(
         raise ValueError("Table not found on the page.")
 
     return df
-
-
-if __name__ == "__main__":
-    df = get_earnings_dates_using_curl_cffi(limit=100, ticker="IQV")
-    print(df)

@@ -44,7 +44,6 @@ from .scrapers.funds import FundsData
 
 from .const import _BASE_URL_, _ROOT_URL_, _QUERY1_URL_, _SENTINEL_
 
-# from .get_earnings_dates_using_selenium import get_earnings_dates_using_selenium
 from .get_earnings_dates_using_curl_cffi import get_earnings_dates_using_curl_cffi
 
 
@@ -708,15 +707,9 @@ class TickerBase:
         self._news = [article for article in news if not article.get('ad', [])]
         return self._news
 
-    # Don't Use Selenium. Use curl_cffi instead
-    # @utils.log_indent_decorator
-    # def get_earnings_dates_using_selenium(self, limit=12, headless = True) -> Optional[pd.DataFrame]:
-    #     df = get_earnings_dates_using_selenium(limit = limit, ticker = self.ticker, headless=headless)
-    #     return df
-
     @utils.log_indent_decorator
     def get_earnings_dates_using_curl_cffi(self, limit=12) -> Optional[pd.DataFrame]:
-        df = get_earnings_dates_using_curl_cffi(limit = limit, ticker = self.ticker)
+        df = get_earnings_dates_using_curl_cffi(_data = self._data, limit = limit, ticker = self.ticker)
         return df
 
     @utils.log_indent_decorator
