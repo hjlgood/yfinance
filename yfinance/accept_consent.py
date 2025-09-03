@@ -1,4 +1,4 @@
-from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode, urljoin
+from urllib.parse import urlsplit, urljoin
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 
