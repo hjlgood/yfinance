@@ -709,7 +709,7 @@ class TickerBase:
 
     @utils.log_indent_decorator
     def get_earnings_dates_using_curl_cffi(self, limit=12) -> Optional[pd.DataFrame]:
-        df = get_earnings_dates_using_curl_cffi(_data = self._data, limit = limit, ticker = self.ticker)
+        df = get_earnings_dates_using_curl_cffi(_session = self.session, _data = self._data, limit = limit, ticker = self.ticker)
         return df
 
     @utils.log_indent_decorator

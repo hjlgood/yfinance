@@ -4,10 +4,11 @@ import pandas as pd
 from typing import Optional
 from dateutil import parser
 from zoneinfo import ZoneInfo
+from .accept_consent import _is_this_consent_url, _accept_consent_form
 
 
 def get_earnings_dates_using_curl_cffi(
-    _data, limit: int = 100, offset: int = 0, ticker: str = "AAPL"
+    _session, _data, limit: int = 100, offset: int = 0, ticker: str = "AAPL", timeout=30
 ) -> Optional[pd.DataFrame]:
     """
     Uses curl_cffi to scrap earnings data from YahooFinance.
@@ -37,7 +38,6 @@ def get_earnings_dates_using_curl_cffi(
     #####################################################
     # Define Constants
     #####################################################
-    unique_class_id_for_table = "yf-7uw1qi bd"
     if limit > 0 and limit <= 25:
         size = 25
     elif limit > 25 and limit <= 50:
@@ -55,16 +55,24 @@ def get_earnings_dates_using_curl_cffi(
     # End of Constants
     #####################################################
 
-    # Use YfData.cache_get
+    # Initial Attempt without cookie-consent
     response = _data.cache_get(url)
-    # Check if the request was successful
     response.raise_for_status()
+
+    # Accept chookie-consent if redirected to consent page
+    if not _is_this_consent_url(response.url):
+        # "Consent Page not detected"
+        pass
+    else:
+        # "Consent Page detected"
+        response = _accept_consent_form(_session, response, timeout)
+
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.text, "html.parser")
     # Find the table by a unique identifier
     # You'd need to inspect the page's HTML to find the correct attributes
     # For Yahoo Finance, the earnings table often has a specific class or data attribute.
-    table = soup.find("table", {"class": unique_class_id_for_table})
+    table = soup.find("table")
     # If the table is found
     if table:
         # Get the HTML string of the table
