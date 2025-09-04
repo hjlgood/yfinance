@@ -453,7 +453,8 @@ class YfData(metaclass=SingletonMeta):
             response_url (str) : response.url
     
         Returns:
-            (bool) : True if consnet page. False if not Consent page
+            True : This is cookie-consent page
+            False : This is not cookie-consent page
         """
         try:
             return urlsplit(response_url).hostname and urlsplit(
@@ -469,12 +470,11 @@ class YfData(metaclass=SingletonMeta):
         Click 'Accept all' to cookie-consent form and return response object.
 
         Args:
-            session (requests.Session) : Current user's session
-            consent_resp (requests.Response) : Response object that seems like cookie-consent page
+            consent_resp (requests.Response) : Response instance of cookie-consent page
             timeout (int) : Raise TimeoutError if post doesn't respond
     
         Returns:
-            response (requests.Response) : Reponse instance received from the server after accepting cookie-consent
+            response (requests.Response) : Reponse instance received from the server after accepting cookie-consent post.
         """
         soup = BeautifulSoup(consent_resp.text, "html.parser")
     

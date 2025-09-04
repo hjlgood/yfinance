@@ -713,13 +713,14 @@ class TickerBase:
     @utils.log_indent_decorator
     def get_earnings_dates_using_scrape(self, limit = 12, offset = 0) -> Optional[pd.DataFrame]:
         """
-        Uses curl_cffi to scrape earnings data from YahooFinance.
-        (https://finance.yahoo.com/calendar/earnings)
+        Uses YfData.cache_get() to scrape earnings data from YahooFinance.
+        (https://finance.yahoo.com/calendar/earnings?symbol=INTC)
     
         Args:
             limit (int): Number of rows to extract (max=100)
-            offset (int): if 0, search from the future EPS estimates. 
+            offset (int): if 0, search from future EPS estimates. 
                           if 1, search from the most recent EPS. 
+                          if x, search from x'th recent EPS. 
     
         Returns:
             pd.DataFrame in the following format.
@@ -755,17 +756,16 @@ class TickerBase:
             self.ticker, offset, size
         )
         #####################################################
-        # End of Constants
+        # Get data
         #####################################################
-    
-        # Initial Attempt without cookie-consent
         response = self._data.cache_get(url)
     
+        #####################################################
+        # Response -> pd.DataFrame
+        #####################################################
         # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(response.text, "html.parser")
-        # Find the table by a unique identifier
-        # You'd need to inspect the page's HTML to find the correct attributes
-        # For Yahoo Finance, the earnings table often has a specific class or data attribute.
+        # This page should have only one <table>
         table = soup.find("table")
         # If the table is found
         if table:
