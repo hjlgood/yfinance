@@ -884,14 +884,15 @@ Default is “yearly”</p>
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">get_earnings_dates_using_scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span></dt>
-<dd><p>Uses curl_cffi to scrape earnings data from YahooFinance.
-(<a class="reference external" href="https://finance.yahoo.com/calendar/earnings">https://finance.yahoo.com/calendar/earnings</a>)</p>
+<dd><p>Uses YfData.cache_get() to scrape earnings data from YahooFinance.
+(<a class="reference external" href="https://finance.yahoo.com/calendar/earnings?symbol=INTC">https://finance.yahoo.com/calendar/earnings?symbol=INTC</a>)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>limit</strong> (<em>int</em>) – Number of rows to extract (max=100)</p></li>
-<li><p><strong>offset</strong> (<em>int</em>) – if 0, search from the future EPS estimates.
-if 1, search from the most recent EPS.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – if 0, search from future EPS estimates.
+if 1, search from the most recent EPS.
+if x, search from x’th recent EPS.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
