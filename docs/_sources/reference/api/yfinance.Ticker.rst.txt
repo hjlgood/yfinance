@@ -148,9 +148,9 @@ Ticker
       :noindex:
    .. automethod:: get_earnings
       :noindex:
-   .. automethod:: get_earnings_dates
+   .. automethod:: get_earnings_dates_using_scrape
       :noindex:
-   .. automethod:: get_earnings_dates_using_curl_cffi
+   .. automethod:: get_earnings_dates_using_screener
       :noindex:
    .. automethod:: get_earnings_estimate
       :noindex:
