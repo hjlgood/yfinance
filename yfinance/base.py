@@ -810,23 +810,29 @@ class TickerBase:
             df = pd.read_html(html_stringio)[0]
             df = df.dropna(subset=["Symbol", "Company", "Earnings Date"])
     
-            # praser.parse doesn't understand "EDT", "EST"
-            tzinfos = {
-                "EDT": ZoneInfo("America/New_York"),
-                "EST": ZoneInfo("America/New_York"),
-            }
-            df.index = df["Earnings Date"].apply(
-                lambda date_str: parser.parse(date_str, tzinfos=tzinfos).strftime(
-                    "%Y-%m-%d"
-                )
-            )
-            df.index.name = "Date"
-            # Remove "+" sign from Surprise(%)
-            df["Surprise (%)"] = df["Surprise (%)"].apply(
-                lambda x: str(x[1:]) if x[0] == "+" else str(x)
-            )
-            df = df.drop(["Earnings Date", "Company", "Symbol"], axis=1)
-    
+            # Drop redundant columns
+            df = df.drop(["Symbol", "Company"], axis=1)
+
+            # Convert types
+            for cn in ["EPS Estimate", "Reported EPS", "Surprise (%)"]:
+                df.loc[df[cn] == '-', cn] = "NaN"
+                df[cn] = df[cn].astype(float)
+
+            # Backwards compatibility
+            df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+
+            # Parse earnings date
+            # - Pandas doesn't like EDT, EST
+            df['Earnings Date'] = df['Earnings Date'].str.replace('EDT', 'America/New_York')
+            df['Earnings Date'] = df['Earnings Date'].str.replace('EST', 'America/New_York')
+            # - separate timezone string (last word)
+            dt_parts = df['Earnings Date'].str.rsplit(' ', n=1, expand=True)
+            dts = dt_parts[0]
+            tzs = dt_parts[1]
+            df['Earnings Date'] = pd.to_datetime(dts, format='%B %d, %Y at %I %p')
+            df['Earnings Date'] = pd.Series([dt.tz_localize(tz) for dt, tz in zip(df['Earnings Date'], tzs)])
+            df = df.set_index("Earnings Date")
+
         else:
             raise ValueError("Table not found on the page.")
         return df
