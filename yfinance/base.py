@@ -738,8 +738,11 @@ class TickerBase:
         self._news = [article for article in news if not article.get('ad', [])]
         return self._news
 
+    def get_earnings_dates(self, limit = 12, offset = 0) -> Optional[pd.DataFrame]:
+        return self._get_earnings_dates_using_scrape(limit, offset)
+
     @utils.log_indent_decorator
-    def get_earnings_dates_using_scrape(self, limit = 12, offset = 0) -> Optional[pd.DataFrame]:
+    def _get_earnings_dates_using_scrape(self, limit = 12, offset = 0) -> Optional[pd.DataFrame]:
         """
         Uses YfData.cache_get() to scrape earnings data from YahooFinance.
         (https://finance.yahoo.com/calendar/earnings?symbol=INTC)
@@ -829,9 +832,12 @@ class TickerBase:
         return df
 
     @utils.log_indent_decorator
-    def get_earnings_dates_using_screener(self, limit=12, proxy=_SENTINEL_) -> Optional[pd.DataFrame]:
+    def _get_earnings_dates_using_screener(self, limit=12, proxy=_SENTINEL_) -> Optional[pd.DataFrame]:
         """
         Get earning dates (future and historic)
+
+        In Summer 2025, Yahoo stopped updating the data at this endpoint.
+        So reverting to scraping HTML.
         
         Args:
             limit (int): max amount of upcoming and recent earnings dates to return.
