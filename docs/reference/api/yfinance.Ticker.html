@@ -375,6 +375,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_earnings.html">yfinance.Ticker.get_earnings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.earnings.html">yfinance.Ticker.earnings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.calendar.html">yfinance.Ticker.calendar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_earnings_dates.html">yfinance.Ticker.get_earnings_dates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.earnings_dates.html">yfinance.Ticker.earnings_dates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_sec_filings.html">yfinance.Ticker.get_sec_filings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.sec_filings.html">yfinance.Ticker.sec_filings</a></li>
@@ -417,6 +418,10 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.institutional_holders.html">yfinance.Ticker.institutional_holders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_mutualfund_holders.html">yfinance.Ticker.get_mutualfund_holders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.mutualfund_holders.html">yfinance.Ticker.mutualfund_holders</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../yfinance.market.html">Market</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="yfinance.Market.html">Market</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../yfinance.search.html">Search &amp; Lookup</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -516,7 +521,18 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="yfinance.Ticker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">yfinance.</span></span><span class="sig-name descname"><span class="pre">Ticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ticker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#yfinance.Ticker" title="Link to this definition">#</a></dt>
-<dd><p class="rubric">Attributes</p>
+<dd><p>Initialize a Yahoo Finance Ticker object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ticker</strong> (<em>str</em><em> | </em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Yahoo Finance symbol (e.g. “AAPL”)
+or a tuple of (symbol, MIC) e.g. (‘OR’,’XPAR’)
+(MIC = market identifier code)</p></li>
+<li><p><strong>session</strong> (<em>requests.Session</em><em>, </em><em>optional</em>) – Custom requests session.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Attributes</p>
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">actions</span></span></dt>
@@ -787,7 +803,18 @@ document.write(`
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ticker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span></dt>
-<dd></dd></dl>
+<dd><p>Initialize a Yahoo Finance Ticker object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ticker</strong> (<em>str</em><em> | </em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Yahoo Finance symbol (e.g. “AAPL”)
+or a tuple of (symbol, MIC) e.g. (‘OR’,’XPAR’)
+(MIC = market identifier code)</p></li>
+<li><p><strong>session</strong> (<em>requests.Session</em><em>, </em><em>optional</em>) – Custom requests session.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
@@ -883,43 +910,7 @@ Default is “yearly”</p>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_earnings_dates_using_scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span></dt>
-<dd><p>Uses YfData.cache_get() to scrape earnings data from YahooFinance.
-(<a class="reference external" href="https://finance.yahoo.com/calendar/earnings?symbol=INTC">https://finance.yahoo.com/calendar/earnings?symbol=INTC</a>)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<em>int</em>) – Number of rows to extract (max=100)</p></li>
-<li><p><strong>offset</strong> (<em>int</em>) – if 0, search from future EPS estimates.
-if 1, search from the most recent EPS.
-if x, search from x’th recent EPS.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>pd.DataFrame in the following format.</p>
-<blockquote>
-<div><p>EPS Estimate Reported EPS Surprise(%)</p>
-</div></blockquote>
-<p>Date
-2025-10-30         2.97            -           -
-2025-07-22         1.73         1.54      -10.88
-2025-05-06         2.63          2.7        2.57
-2025-02-06         2.09         2.42       16.06
-2024-10-31         1.92         1.55      -19.36
-…                 …          …         …
-2014-07-31         0.61         0.65        7.38
-2014-05-01         0.55         0.68       22.92
-2014-02-13         0.55         0.58        6.36
-2013-10-31         0.51         0.54        6.86
-2013-08-01         0.46          0.5        7.86</p>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_earnings_dates_using_screener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit=12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span></dt>
+<span class="sig-name descname"><span class="pre">get_earnings_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit=12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span></dt>
 <dd><p>Get earning dates (future and historic)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>yfinance.Ticker.earnings_dates &#8212; yfinance</title>
+    <title>yfinance.Ticker.get_earnings_dates &#8212; yfinance</title>
   
   
   
@@ -42,11 +42,11 @@
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/api/yfinance.Ticker.earnings_dates';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/api/yfinance.Ticker.get_earnings_dates';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="yfinance.Ticker.get_sec_filings" href="yfinance.Ticker.get_sec_filings.html" />
-    <link rel="prev" title="yfinance.Ticker.get_earnings_dates" href="yfinance.Ticker.get_earnings_dates.html" />
+    <link rel="next" title="yfinance.Ticker.earnings_dates" href="yfinance.Ticker.earnings_dates.html" />
+    <link rel="prev" title="yfinance.Ticker.calendar" href="yfinance.Ticker.calendar.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -375,8 +375,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_earnings.html">yfinance.Ticker.get_earnings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.earnings.html">yfinance.Ticker.earnings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.calendar.html">yfinance.Ticker.calendar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_earnings_dates.html">yfinance.Ticker.get_earnings_dates</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">yfinance.Ticker.earnings_dates</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">yfinance.Ticker.get_earnings_dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.earnings_dates.html">yfinance.Ticker.earnings_dates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.get_sec_filings.html">yfinance.Ticker.get_sec_filings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="yfinance.Ticker.sec_filings.html">yfinance.Ticker.sec_filings</a></li>
 </ul>
@@ -516,12 +516,23 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="yfinance-ticker-earnings-dates">
-<h1>yfinance.Ticker.earnings_dates<a class="headerlink" href="#yfinance-ticker-earnings-dates" title="Link to this heading">#</a></h1>
-<dl class="py property">
-<dt class="sig sig-object py" id="yfinance.Ticker.earnings_dates">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Ticker.</span></span><span class="sig-name descname"><span class="pre">earnings_dates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#yfinance.Ticker.earnings_dates" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+  <section id="yfinance-ticker-get-earnings-dates">
+<h1>yfinance.Ticker.get_earnings_dates<a class="headerlink" href="#yfinance-ticker-get-earnings-dates" title="Link to this heading">#</a></h1>
+<dl class="py method">
+<dt class="sig sig-object py" id="yfinance.Ticker.get_earnings_dates">
+<span class="sig-prename descclassname"><span class="pre">Ticker.</span></span><span class="sig-name descname"><span class="pre">get_earnings_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit=12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy=&lt;object</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#yfinance.Ticker.get_earnings_dates" title="Link to this definition">#</a></dt>
+<dd><p>Get earning dates (future and historic)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>limit</strong> (<em>int</em>) – max amount of upcoming and recent earnings dates to return.
+Default value 12 should return next 4 quarters and last 8 quarters.
+Increase if more history is needed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -536,20 +547,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="yfinance.Ticker.get_earnings_dates.html"
+       href="yfinance.Ticker.calendar.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">yfinance.Ticker.get_earnings_dates</p>
+        <p class="prev-next-title">yfinance.Ticker.calendar</p>
       </div>
     </a>
     <a class="right-next"
-       href="yfinance.Ticker.get_sec_filings.html"
+       href="yfinance.Ticker.earnings_dates.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">yfinance.Ticker.get_sec_filings</p>
+        <p class="prev-next-title">yfinance.Ticker.earnings_dates</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -571,14 +582,14 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yfinance.Ticker.earnings_dates"><code class="docutils literal notranslate"><span class="pre">Ticker.earnings_dates</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yfinance.Ticker.get_earnings_dates"><code class="docutils literal notranslate"><span class="pre">Ticker.get_earnings_dates()</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../../_sources/reference/api/yfinance.Ticker.earnings_dates.rst.txt">
+    <a href="../../_sources/reference/api/yfinance.Ticker.get_earnings_dates.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
