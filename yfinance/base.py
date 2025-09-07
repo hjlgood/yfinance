@@ -47,8 +47,6 @@ from .const import _BASE_URL_, _ROOT_URL_, _QUERY1_URL_, _SENTINEL_
 
 from io import StringIO
 from bs4 import BeautifulSoup
-from dateutil import parser
-from zoneinfo import ZoneInfo
 
 
 _tz_info_fetch_ctr = 0
@@ -807,16 +805,11 @@ class TickerBase:
             html_stringio = StringIO(table_html)
     
             # Pass the StringIO object to pd.read_html()
-            df = pd.read_html(html_stringio)[0]
+            df = pd.read_html(html_stringio, na_values=['-'])[0]
             df = df.dropna(subset=["Symbol", "Company", "Earnings Date"])
     
             # Drop redundant columns
             df = df.drop(["Symbol", "Company"], axis=1)
-
-            # Convert types
-            for cn in ["EPS Estimate", "Reported EPS", "Surprise (%)"]:
-                df.loc[df[cn] == '-', cn] = "NaN"
-                df[cn] = df[cn].astype(float)
 
             # Backwards compatibility
             df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
