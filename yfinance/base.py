@@ -827,7 +827,10 @@ class TickerBase:
             df = df.set_index("Earnings Date")
 
         else:
-            raise ValueError("Table not found on the page.")
+            err_msg = "No earnings dates found, symbol may be delisted"
+            logger = utils.get_yf_logger()
+            logger.error(f'{self.ticker}: {err_msg}')
+            return None
         return df
 
     @utils.log_indent_decorator
